@@ -1,0 +1,22 @@
+version: 0.0
+os: linux
+files:
+   - source: /
+     destination: /var/www/html/hub
+permissions:
+   - object: /var/www/html/hub
+     pattern: "**"
+     owner: nginx
+     group: nginx
+     mode: 755
+     type:
+       - file
+hooks:
+   BeforeInstall:
+    - location: scripts/installpackages.sh
+      runas: root
+    - location: scripts/startnginx.sh
+      runas: root
+   AfterInstall:
+    - location: scripts/restartnginx.sh
+      runas: root
